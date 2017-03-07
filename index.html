@@ -9,7 +9,44 @@
 
 <body>
     <script type="text/javascript">
-        // Your beautiful D3 code will go here
+        //d3.select("body").append("p").text("New Paragraph!");
+        // How to load data from csv file
+        /*var dataset;
+        d3.csv("fileName.csv", function (error, data) {
+            if (error) {
+                console.log(error);
+            }
+            else {
+                console.log(data);
+            }
+            dataset = data;
+            // call some other functions
+        });
+        // How to load data from JSON
+        d3.json("filename.json", function (json) {
+            console.log(json);
+        });*/
+        
+        var dataset = [5, 10, 15, 20, 25];
+        d3.select("body")
+            .selectAll("p")
+            .data(dataset)
+            .enter().append("p")
+            .text(function(d) {
+            return "I can count up to " + d;
+        }).style("color", function(d){
+            if(d > 15) {
+                return "red";
+            } else {
+                return "green";
+            }
+        });
+        
+        
+        
+        
+        
+        
     </script>
     <svg width="500" height="500">
         <rect x="0" y="0" width="300" height="300" fill="purple" style="fill-opacity: 0.9;stroke-width:3;stroke:rgb(128,128,128)" />
