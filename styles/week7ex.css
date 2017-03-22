@@ -1,5 +1,5 @@
 body {
-  font: 14px sans-serif;
+  font: 12px sans-serif;
 }
 
 .axis path,
@@ -10,11 +10,7 @@ body {
 }
 
 .bar {
-  fill: lightblue;
-}
-
-.bar:hover {
-  fill: blue;
+  fill: olive;
 }
 
 .bars {
@@ -22,24 +18,24 @@ body {
 }
 
 .bars:hover {
-    fill: blue;
+    fill: olive;
 }
 
 .scatter {
-  fill: lightblue;
+  fill: olive;
 }
 
 .circle {
-    fill: lightblue;
-    stroke: blue;
+    fill: gray;
+    stroke: black;
 }
 
 .circle:hover {
-    fill: blue;
+    fill: black;
 }
 
-.scatterlabelaxis {
-    fill: lightblue;
+.labelaxis {
+    fill: olive;
     font-weight: bold;
     font-size: 16px;
 }

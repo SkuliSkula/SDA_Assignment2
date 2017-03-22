@@ -14,50 +14,105 @@
     <script type="text/javascript" src="scripts/d3tip.js"></script>
     
     <script type="text/javascript">
-        var data2013 = [];
-        var data2015 = [];
-        
-        // Reading the data for visualization 1
-        d3.csv("/data/distr_prost_vt_count.csv", function(error, data){
-            if(error) {
-                console.log("Error: ", error);
-            } else {
-                console.log(data);
-                initVisualization1(data);
-            } 
-        });
-        
-        // Reading the data for visualization 2
-        d3.csv("/data/crime_time_of_day.csv", function(error, data){
-            if(error) {
-                console.log("Error: ", error);
-            } else {
-                initVisualization2(data);
-            } 
-        });
-        
-    function showData2013(){
-        initVisualization1(data2013);
-    }
-   
-    function showData2013(){
-        initVisualization1(data2015);
-    }
-        
-    function initVisualization1(data) {
-        
+        var data2003,data2015, joinedData = [];
+        var svg = undefined;
         var margin = {top: 40, right: 20, bottom: 30, left: 30},
             width = 960 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
-     
         var padding = 65;
+        var xScale,yScale, rScale, tip;
+
+        // Reading data for 2003 
+        d3.csv("/data/distr_prost_vt_count_2003.csv", function(error, data){
+            if(error) {
+                console.log("Error: ", error);
+            } else {
+                data.map(function(d) {
+                    joinedData.push({"Prostitution": +d.prostitution, "Vehicle_theft": +d.vehicle_theft});
+                });
+                data2003 = data;
+                loadSecondDataSet();
+                
+            } 
+        });
+        
+
+    
+    function loadSecondDataSet() {
+        
+        // Reading the data for visualization 2
+        d3.csv("/data/distr_prost_vt_count_2015.csv", function(error, data){
+            if(error) {
+                console.log("Error: ", error);
+            } else {
+                data.map(function(d) {
+                    joinedData.push({"Prostitution": +d.prostitution, "Vehicle_theft": +d.vehicle_theft});
+                });
+                data2015 = data;
+                initVisualization(data2003, joinedData);
+            } 
+        });
+    }  
+
+    function switchData() {
+            
+        // Create the SVG
+        svg = d3.select("#visualization1")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+        
+        svg.call(tip);
+        
+        svg.selectAll("#scatter")
+            .data(data2015)
+            .enter()
+            .append("circle")  
+            .attr("class", "circle")
+            .attr("cx", function(d) {
+                return xScale(+d.prostitution);
+            })
+            .attr("cy", function(d) {
+                return yScale(+d.vehicle_theft);
+            })
+            .attr("r", function(d) {
+                return rScale((+d.prostitution + +d.vehicle_theft));
+            })
+            .on('mouseover', tip.show)
+            .on('mouseout', tip.hide);
+    
+        // Add Text Labels
+        svg.selectAll("text")
+            .data(data2015)
+            .enter()
+            .append("text")
+            .text(function(d) {
+                return d.district;
+            })
+            .attr("x", function(d) {
+                return xScale(+d.prostitution); 
+            })
+            .attr("y", function(d) {
+                if(d.district == "PARK" || d.district == "INGLESIDE")
+                    return 20 + yScale(+d.vehicle_theft);
+                else
+                    return -10 + yScale(+d.vehicle_theft);
+            })
+            .on("mouseover", tip.show)
+            .on("mouseout", tip.hide);
+    }  
+        
+    function initVisualization(data, joinedData) {
+
+     
+        
         // Create an array with Count only to get the max for scaling
         var countProstitutionArray = [];
         var countVehicleTheftArray = [];
         
-        data.map(function(d) {
-            countProstitutionArray.push(parseInt(d.prostitution));
-            countVehicleTheftArray.push(parseInt(d.vehicle_theft));
+        joinedData.map(function(d) {
+            countProstitutionArray.push(parseInt(d.Prostitution));
+            countVehicleTheftArray.push(parseInt(d.Vehicle_theft));
         })
         
         // Join the data so we can scale the radius
@@ -65,20 +120,20 @@
             return (+d.prostitution + +d.vehicle_theft);  
         });
 
-        var xScale = d3.scale.linear()
+        xScale = d3.scale.linear()
                      .domain([0, d3.max(countProstitutionArray, function(d) { return d; })])
                      .range([padding, width - padding * 2]);
         
-        var yScale = d3.scale.linear()
+        yScale = d3.scale.linear()
                      .domain([0, d3.max(countVehicleTheftArray, function(d) { return d; })])
                      .range([height - padding, padding]);
         
-        var rScale = d3.scale.linear()
+        rScale = d3.scale.linear()
                      .domain([0, d3.max(joined, function(d) { return d; })])
                      .range([2, 10]);
         
         // Create the tooltip
-        var tip = d3.tip()
+        tip = d3.tip()
             .attr('class', 'd3-tip')
             .offset([-10, 0])
             .html(function(d) {
@@ -87,7 +142,7 @@
         
         
         // Create the SVG
-        var svg = d3.select("#visualization1")
+        svg = d3.select("#visualization1")
             .append("svg")
             .attr("width", width)
             .attr("height", height);
@@ -166,110 +221,15 @@
               .style("text-anchor", "end")
             .text("Vehicle theft");
     }
-    
-    // Function that creates the SVG for visualization 2
-    function initVisualization2(data) {
-        var margin = {top: 40, right: 20, bottom: 50, left: 80},
-            width = 960 - margin.left - margin.right,
-            height = 500 - margin.top - margin.bottom;
-        // Create an array with Count only to get the max for scaling
-        var countArray = [];
-        
-        data.map(function(d) {
-            countArray.push(parseInt(d.Count));
-        })
-
-        // Create the tooltip
-        var tip = d3.tip()
-            .attr('class', 'd3-tip')
-            .offset([-10, 0])
-            .html(function(d) {
-                return "<strong>Crime count:</strong> <span style='color:red'>" + d.Count + "</span>";
-            });
-        
-        // Create the scale
-        var xScale = d3.scale.ordinal()
-                .domain(d3.range(data.length))
-                .rangeRoundBands([0, width], 0.05);
-
-        var yScale = d3.scale.linear()
-                .domain([0, d3.max(countArray)])
-                .range([height, 0]);
-        
-        // Create axis
-        var xAxis = d3.svg.axis()
-                  .scale(xScale)
-                  .orient("bottom");
-        
-        var yAxis = d3.svg.axis()
-                  .scale(yScale)
-                  .orient("left");
-        
-        // Create the SVG
-        var svg = d3.select("#visualization2").append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-        
-        svg.call(tip);
-        
-        // Create the x-axis
-        svg.append("g")
-          .attr("class", "x axis")
-          .attr("transform", "translate(0," + height + ")")
-          .call(xAxis)
-        .append("text")
-            .attr("class", "labelaxis")
-            .attr("y", 4)
-            .attr("x", 420)
-            .attr("dy", "2em")
-            .style("text-anchor", "end")
-            .text("Hour");
-        
-        // Create the y-axis
-        svg.append("g")
-          .attr("class", "y axis")
-          .call(yAxis)
-        .append("text")
-          .attr("transform", "rotate(-90)")
-          .attr("class", "labelaxis")
-          .attr("y", -14)
-          .attr("x", 30)
-          .attr("dy", "-3.3em")
-          .attr("dx", "-12em")
-          .style("text-anchor", "end")
-          .text("Crime count");
-
-        // Create the bars
-        svg.selectAll(".bar")
-            .data(data)
-            .enter().append("rect")
-            .attr("class", "bars")
-            .attr("x", function(d) { return xScale(d.Hour); })
-            .attr("width", xScale.rangeBand())
-            .attr("y", function(d) { return yScale(d.Count); })
-            .attr("height", function(d) { return height - yScale(d.Count); })
-            .on('mouseover', tip.show)
-            .on('mouseout', tip.hide);
-        
-    
-    }
-        
+            
     </script>
     <div class="container">
         <div class="col-sm-12">
             <h1>Scatterplot of Prostitution and Vehicle Theft</h1>
             <p>Scatterplot showing Prostitution on the x-axis and Vehicle Theft on the y-axis</p>
-            <button class="btn btn-info" id="btn2013" onclick="showData2013();">Data year 2013</button>
-            <button class="btn btn-info" id="btn2015" onclick="showData2015();">Data year 2015</button>
+            <button class="btn btn-info" id="btn2013" onclick="switchData();">Data year 2003</button>
+            <button class="btn btn-info" id="btn2015" onclick="switchData();">Data year 2015</button>
             <div id="visualization1" class="scatter">
-            </div>
-        </div>
-        <div class="col-sm-12">
-            <h1>Crimes commited at a given hour</h1>
-            <p>The bar chart shows the number of crimes commited at a given hour. X-Axis show´s the hour, zero meaning midnight etc. Y-Axis shows how many crimes has been commited. Hover over the bar to see excact crime count number.</p>
-            <div id="visualization2" class="bar">
             </div>
         </div>
     </div>
