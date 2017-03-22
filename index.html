@@ -15,7 +15,7 @@
     <script type="text/javascript">
         
         // Reading the data for visualization 1
-        d3.csv("/SocialDataAnalysis/tree/master/data/distr_prost_vt_count.csv", function(error, data){
+        d3.csv("https://gist.github.com/SkuliSkula/9138513d901d69e4582cdd5b296c7ff4", function(error, data){
             if(error) {
                 console.log("Error: ", error);
             } else {
@@ -25,7 +25,7 @@
         });
         
         // Reading the data for visualization 2
-        d3.csv("/SocialDataAnalysis/tree/master/data/crime_time_of_day.csv", function(error, data){
+        d3.csv("https://gist.githubusercontent.com/SkuliSkula/6a1eba98628d3f06971536e03f105b41/raw/7d244ccb7798c5a97308c1a046bd95c1af5d592c/crime_time_of_day.csv", function(error, data){
             if(error) {
                 console.log("Error: ", error);
             } else {
