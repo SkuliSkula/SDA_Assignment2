@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="styles/chartstyles.css"> </head>
 
 <body>
+    <p>
+        Click on this text to update the chart with new data values.
+    </p>
     <script type="text/javascript">
         /*var dataset = [ 25, 7, 5, 26, 11, 8, 25, 14, 23, 19,
                 14, 11, 22, 29, 11, 13, 12, 17, 18, 10,
@@ -62,62 +65,99 @@
         var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
 				11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
         
-        var w = 500;
-        var h = 100;
+        var w = 600;
+        var h = 250;
         var barPadding = 1;
+        var maxValue = 25;
         
+        var xScale = d3.scale.ordinal()
+                .domain(d3.range(dataset.length))
+                .rangeRoundBands([0, w], 0.05);
+        
+        var yScale = d3.scale.linear()
+                .domain([0, d3.max(dataset)])
+                .range([0, h]);
+        
+        // Create SVG element
         var svg = d3.select("body")
             .append("svg")
             .attr("width", w)
             .attr("height", h);
         
-        /*svg.selectAll("rect")
-            .data(dataset)
-            .enter()
-            .append("rect")
-            .attr("x", function(d,i) {
-                return i * (w / dataset.length);
-            })
-            .attr("y", function(d) {
-                return h - (d*4);
-        })
-            .attr("width", w / dataset.length - barPadding)
-            .attr("height", function(d) {
-                return d* 4;
-        }).attr("fill", function(d) {
-            return "rgb(0, 0, " + (d * 10) +")";
-        });*/
-        
+        // Create bars
         svg.selectAll("rect")
             .data(dataset)
             .enter()
             .append("rect")
             .attr({
-                x: function(d, i) { return i * (w / dataset.length); },
-                y: function(d) { return h - (d * 4); },
-                width: w / dataset.length - barPadding,
-                height: function(d) { return d * 4; },
+                x: function(d, i) { return xScale(i); },
+                y: function(d) { return h - yScale(d); },
+                width: xScale.rangeBand(),
+                height: function(d) { return yScale(d); },
                 fill: function(d) { return "rgb(0, 0, " + (d * 10) + ")"; }
             });
         
-			svg.selectAll("text")
-			   .data(dataset)
-			   .enter()
-			   .append("text")
-			   .text(function(d) {
-			   		return d;
-			   })
-			   .attr("text-anchor", "middle")
-			   .attr("x", function(d, i) {
-			   		return i * (w / dataset.length) + (w / dataset.length - barPadding) / 2;
-			   })
-			   .attr("y", function(d) {
-			   		return h - (d * 4) + 14;
-			   })
-			   .attr("font-family", "sans-serif")
-			   .attr("font-size", "11px")
-			   .attr("fill", "white");
+        // Create labels
+        svg.selectAll("text")
+           .data(dataset)
+           .enter()
+           .append("text")
+           .text(function(d) {
+                return d;
+           })
+           .attr("text-anchor", "middle")
+           .attr("x", function(d, i) {
+                return xScale(i) + xScale.rangeBand() / 2;
+           })
+           .attr("y", function(d) {
+                return h - yScale(d) + 14;
+           })
+           .attr("font-family", "sans-serif")
+           .attr("font-size", "11px")
+           .attr("fill", "white");
         
+        d3.select("p")
+            .on("click", function() {
+                //New values for dataset
+               var numValues = dataset.length;               //Count original length of dataset
+            dataset = [];
+            for (var i = 0; i < numValues; i++) {
+                var newNumber = Math.floor(Math.random() * maxValue);
+                dataset.push(newNumber);             
+            }
+
+                //Update all rects
+                svg.selectAll("rect")
+                    .data(dataset)
+                    .transition("")
+                    .delay(function(d,i){
+                        return i / dataset.length * 1000;
+                    })
+                    .duration(500)
+                    .ease("linear")
+                    .attr("y", function(d) {
+                        return h - yScale(d);
+                    })
+                    .attr("height", function(d) {
+                        return yScale(d);
+                    })
+                    .attr("fill", function(d){
+                        return "rgb(0,0, 100)";
+                    });
+            
+                // Update all labels
+                svg.selectAll("text")
+                    .data(dataset)
+                    .text(function(d) {
+                    return d;
+                })
+                .attr("x", function(d, i) {
+                    return xScale(i) + xScale.rangeBand() / 2;
+                })
+                .attr("y", function(d) {
+                    return h - yScale(d) + 14;
+                });
+        });
         /***************************SCATTERPLOT************************************ */
         
         var w = 500;
@@ -166,7 +206,7 @@
             .attr("width", w)
             .attr("height", h);
         
-        svg.selectAll("circle")  // <-- No longer "rect"
+        svg.selectAll("circle")
             .data(dataset)
             .enter()
             .append("circle")     
@@ -179,24 +219,6 @@
             .attr("r", function(d) {
                 return rScale(d[1]);
         });
-        
-        /*svg.selectAll("text")  // <-- Note "text", not "circle" or "rect"
-           .data(dataset)
-           .enter()
-           .append("text") 
-           .text(function(d) {
-                return d[0] + "," + d[1];
-            })   
-            .attr("x", function(d) {
-                return xScale(d[0]);
-            })
-            .attr("y", function(d) {
-                return yScale(d[1]);
-            })
-            .attr("font-family", "sans-serif")
-            .attr("font-size", "11px")
-            .attr("fill", "red");
-        */
         
         var xAxis = d3.svg.axis()
                   .scale(xScale)
@@ -217,7 +239,7 @@
             .attr("class", "axis")
             .attr("transform", "translate(" + padding + ",0)")
             .call(yAxis);
-
+        
         
     </script>
     
