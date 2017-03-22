@@ -15,7 +15,7 @@
     <script type="text/javascript">
         
         // Reading the data for visualization 1
-        d3.csv("/data/distr_prost_vt_count.csv", function(error, data){
+        d3.csv("https://github.com/SkuliSkula/SocialDataAnalysis/tree/master/data/distr_prost_vt_count.csv", function(error, data){
             if(error) {
                 console.log("Error: ", error);
             } else {
@@ -25,7 +25,7 @@
         });
         
         // Reading the data for visualization 2
-        d3.csv("/data/crime_time_of_day.csv", function(error, data){
+        d3.csv("https://github.com/SkuliSkula/SocialDataAnalysis/tree/master/data/crime_time_of_day.csv", function(error, data){
             if(error) {
                 console.log("Error: ", error);
             } else {
