@@ -23,7 +23,7 @@
         var xScale,yScale, rScale, tip;
 
         // Reading data for 2003 
-        d3.csv("/data/distr_prost_vt_count_2003.csv", function(error, data){
+        d3.csv("https://gist.githubusercontent.com/SkuliSkula/cd6604c5f2edc3e2838c149eeba8bc22/raw/ecbf3a0c79e6a92b10bf3659f60f03d9bc3b758d/distr_prost_vt_count_2003.csv", function(error, data){
             if(error) {
                 console.log("Error: ", error);
             } else {
@@ -39,7 +39,7 @@
     function loadSecondDataSet() {
         
         // Reading the data for visualization 2
-        d3.csv("/data/distr_prost_vt_count_2015.csv", function(error, data){
+        d3.csv("https://gist.githubusercontent.com/SkuliSkula/2ca407f49ff55ff4cf994706a586f022/raw/58f1a9452d94c02c7f96b57a2aa0d31bec1b7bf0/distr_prost_vt_count_2015.csv", function(error, data){
             if(error) {
                 console.log("Error: ", error);
             } else {
