@@ -220,6 +220,54 @@
         var colores_g = ["#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"];
         return colores_g[n % colores_g.length];
     }
+     /**************************************************************GEODATA**********************************************************************************************   */
+
+
+    //Load in GeoJSON data
+    d3.json("https://gist.githubusercontent.com/SkuliSkula/ef293552320cea71928b7c92634ed5f2/raw/f7c8bc58b592b4af0e01703787b7cdf1f2db3e78/geodata.geojson", function(error, data) {
+        if(error) {
+            console.log(error);
+        } else{
+            initGeoVisualization(data);
+        }
+    });
+        
+    function initGeoVisualization(data) {
+        
+        //Width and height
+        var w = 960;
+        var h = 500;
+
+        //Define map projection
+        var projection = d3.geo.mercator()
+            .scale(155000)
+            // Center the Map in San Francisco
+            .center([-122.45, 37.76])
+            .translate([w/2, h/2]);
+
+        //Define default path generator
+        var path = d3.geo.path().projection(projection);
+
+        //Create SVG element
+        var svg = d3.select("#visualization2")
+                .append("svg")
+                .attr("width", w)
+                .attr("height", h);
+        
+        //Bind data and create one path per GeoJSON feature
+        svg.selectAll("path")
+           .data(data.features)
+           .enter()
+           .append("path")
+           .attr("d", path)
+           .style("fill", "gray");
+    }
+
+
+			
+		
+        
+    
     </script>
     <div class="container">
         <div class="row">
@@ -245,7 +293,7 @@
                     <h1>Assignment 2B:</h1>
                     <h3>Assignment title</h3>
                     <p>More detailed assignment explanation</p>
-                    <div id="visualization2" class="geoplot">Geoplot</div>
+                    <div id="visualization2" class="geoplot"></div>
                 </div>
             </div>
         </div>
