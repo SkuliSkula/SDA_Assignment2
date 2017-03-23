@@ -9,37 +9,26 @@ body {
   shape-rendering: crispEdges;
 }
 
-.bar {
-  fill: olive;
-}
-
-.bars {
-    fill: lightblue;
-}
-
-.bars:hover {
-    fill: olive;
-}
-
 .scatter {
   fill: black;
 }
 
 .circle {
-    fill: gray;
     stroke: black;
 }
 
-.circle:hover {
+.circle:hover{
     fill: black;
 }
 
 .district {
-    fill: olive;
+    
 }
 
 .district:hover {
     fill: black;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 .labelaxis {
