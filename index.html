@@ -6,13 +6,14 @@
     <title>Assignment 2</title>
     <link rel="stylesheet" href="styles/bootstrap.min.css">
     <link rel="stylesheet" href="styles/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="styles/week7ex.css"> </head>
-
-<body>
     <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="scripts/bootstrap.js"></script>
     <script type="text/javascript" src="scripts/d3.js"></script>
     <script type="text/javascript" src="scripts/d3tip.js"></script>
+    <link rel="stylesheet" href="styles/assignment2.css"> </head>
+
+<body>
+
     
     <script type="text/javascript">
         var data2003,data2015, joinedData = [];
@@ -24,7 +25,7 @@
         var xScale,yScale, rScale, tip;
 
         // Reading data for 2003 
-        d3.csv("https://gist.githubusercontent.com/SkuliSkula/cd6604c5f2edc3e2838c149eeba8bc22/raw/ecbf3a0c79e6a92b10bf3659f60f03d9bc3b758d/distr_prost_vt_count_2003.csv", function(error, data){
+        d3.csv("/data/distr_prost_vt_count_2003.csv", function(error, data){
             if(error) {
                 console.log("Error: ", error);
             } else {
@@ -40,7 +41,7 @@
     function loadSecondDataSet() {
         
         // Reading the data for visualization 2
-        d3.csv("https://gist.githubusercontent.com/SkuliSkula/2ca407f49ff55ff4cf994706a586f022/raw/58f1a9452d94c02c7f96b57a2aa0d31bec1b7bf0/distr_prost_vt_count_2015.csv", function(error, data){
+        d3.csv("/data/distr_prost_vt_count_2015.csv", function(error, data){
             if(error) {
                 console.log("Error: ", error);
             } else {
@@ -156,6 +157,7 @@
             .attr("r", function(d) {
                 return rScale((+d.prostitution + +d.vehicle_theft));
             })
+            .attr("fill", function(d,i) { return color(i);})
             .on('mouseover', tip.show)
             .on('mouseout', tip.hide);
     
@@ -164,6 +166,7 @@
             .data(data)
             .enter()
             .append("text")
+            .attr("class", "district")
             .text(function(d) {
                 return d.district;
             })
@@ -171,7 +174,9 @@
                 return xScale(+d.prostitution); 
             })
             .attr("y", function(d) {
-                    return -10 + yScale(+d.vehicle_theft);
+                return -10 + yScale(+d.vehicle_theft);
+            })
+            .attr("fill", function(d,i) { return color(i);
             })
             .on("mouseover", tip.show)
             .on("mouseout", tip.hide);
@@ -180,12 +185,13 @@
         var xAxis = d3.svg.axis()
                   .scale(xScale)
                   .orient("bottom")
-                  .ticks(10);
+                  .ticks(5);
         
         var yAxis = d3.svg.axis()
                   .scale(yScale)
                   .orient("left")
-                  .ticks(10);
+                  .ticks(5);
+        
         
         svg.append("g")
             .attr("class", "axis")
@@ -211,22 +217,38 @@
               .style("text-anchor", "end")
             .text("Vehicle theft");
     }
-            
+        
+    function color(n) {
+        var colores_g = ["#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"];
+        return colores_g[n % colores_g.length];
+    }
     </script>
     <div class="container">
-        <div class="col-sm-12">
-            <h1>Assignment 2A:</h1>
-            <h3>Scatterplot of Prostitution and Vehicle Theft</h3>
-            <p>Scatterplot showing Prostitution on the x-axis and Vehicle Theft on the y-axis. Click on the buttons to see difference between data from 2003 and 2015</p>
-           <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-info active" onclick="switchData(true);">
-                    <input type="radio" name="options" id="data2003" autocomplete="off" checked> Data 2003
-                </label>
-                <label class="btn btn-info" onclick="switchData(false);">
-                    <input type="radio" name="options" id="data2015" autocomplete="off"> Data 2015
-                </label>
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>Assignment 2A:</h1>
+                <h3>Scatterplot of Prostitution and Vehicle Theft</h3>
+                <p>Scatterplot showing Prostitution on the x-axis and Vehicle Theft on the y-axis. Click on the buttons to see difference between data from 2003 and 2015</p>
+               <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-info active" onclick="switchData(true);" style="outline: 0">
+                        <input type="radio" name="options" id="data2003" autocomplete="off" checked> Data 2003
+                    </label>
+                    <label class="btn btn-info" onclick="switchData(false);" style="outline: 0">
+                        <input type="radio" name="options" id="data2015" autocomplete="off"> Data 2015
+                    </label>
+                </div>
+                <div id="visualization1" class="scatter">
+                </div>
+                <h4>Explain in your own words why you think I want the axes to be the same for both years? (Even though you know how to make axes adapt to the data values.)</h4>
+                <p>Answer: </p>
             </div>
-            <div id="visualization1" class="scatter">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Assignment 2B:</h1>
+                    <h3>Assignment title</h3>
+                    <p>More detailed assignment explanation</p>
+                    <div id="visualization2" class="geoplot">Geoplot</div>
+                </div>
             </div>
         </div>
     </div>
