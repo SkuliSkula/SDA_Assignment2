@@ -3,13 +3,14 @@
 
 <head>
     <meta charset="utf-8">
-    <title>D3 Page Template</title>
-    <script type="text/javascript" src="scripts/d3.js"></script>
+    <title>Assignment 2</title>
     <link rel="stylesheet" href="styles/bootstrap.min.css">
     <link rel="stylesheet" href="styles/bootstrap-theme.min.css">
     <link rel="stylesheet" href="styles/week7ex.css"> </head>
 
 <body>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="scripts/bootstrap.js"></script>
     <script type="text/javascript" src="scripts/d3.js"></script>
     <script type="text/javascript" src="scripts/d3tip.js"></script>
     
@@ -35,8 +36,6 @@
                 
             } 
         });
-        
-
     
     function loadSecondDataSet() {
         
@@ -54,21 +53,26 @@
         });
     }  
 
-    function switchData() {
-            
-        // Create the SVG
-        svg = d3.select("#visualization1")
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height);
+    function switchData(data) {
+        console.log(data);
+        var dataset = []; 
+                
+        if(data) {
+            dataset = data2003; 
+        }
+        else{
+            dataset = data2015; 
+        }
+
         
-        svg.call(tip);
-        
-        svg.selectAll("#scatter")
-            .data(data2015)
-            .enter()
-            .append("circle")  
-            .attr("class", "circle")
+        svg.selectAll("circle")
+            .data(dataset)
+            .transition()
+            .delay(function(d,i){
+            return i / dataset.length * 1000;
+            })
+            .duration(500)
+            .ease("linear")
             .attr("cx", function(d) {
                 return xScale(+d.prostitution);
             })
@@ -77,15 +81,11 @@
             })
             .attr("r", function(d) {
                 return rScale((+d.prostitution + +d.vehicle_theft));
-            })
-            .on('mouseover', tip.show)
-            .on('mouseout', tip.hide);
-    
+            });
+           
         // Add Text Labels
         svg.selectAll("text")
-            .data(data2015)
-            .enter()
-            .append("text")
+            .data(dataset)
             .text(function(d) {
                 return d.district;
             })
@@ -93,19 +93,13 @@
                 return xScale(+d.prostitution); 
             })
             .attr("y", function(d) {
-                if(d.district == "PARK" || d.district == "INGLESIDE")
-                    return 20 + yScale(+d.vehicle_theft);
-                else
-                    return -10 + yScale(+d.vehicle_theft);
-            })
-            .on("mouseover", tip.show)
-            .on("mouseout", tip.hide);
+                return -10 + yScale(+d.vehicle_theft);
+            });
+            
     }  
         
     function initVisualization(data, joinedData) {
 
-     
-        
         // Create an array with Count only to get the max for scaling
         var countProstitutionArray = [];
         var countVehicleTheftArray = [];
@@ -137,7 +131,7 @@
             .attr('class', 'd3-tip')
             .offset([-10, 0])
             .html(function(d) {
-                return "<span style='color:red'>" + "(" + d.prostitution +","+ d.vehicle_theft + ")" + "</span>";
+                return "<strong>"+ d.district + ": " +"</strong> <span style='color:red'>" + "(" + d.prostitution +","+ d.vehicle_theft + ")" + "</span>";
             });
         
         
@@ -178,9 +172,6 @@
                 return xScale(+d.prostitution); 
             })
             .attr("y", function(d) {
-                if(d.district == "PARK" || d.district == "INGLESIDE")
-                    return 20 + yScale(+d.vehicle_theft);
-                else
                     return -10 + yScale(+d.vehicle_theft);
             })
             .on("mouseover", tip.show)
@@ -225,10 +216,17 @@
     </script>
     <div class="container">
         <div class="col-sm-12">
-            <h1>Scatterplot of Prostitution and Vehicle Theft</h1>
-            <p>Scatterplot showing Prostitution on the x-axis and Vehicle Theft on the y-axis</p>
-            <button class="btn btn-info" id="btn2013" onclick="switchData();">Data year 2003</button>
-            <button class="btn btn-info" id="btn2015" onclick="switchData();">Data year 2015</button>
+            <h1>Assignment 2A:</h1>
+            <h3>Scatterplot of Prostitution and Vehicle Theft</h3>
+            <p>Scatterplot showing Prostitution on the x-axis and Vehicle Theft on the y-axis. Click on the buttons to see difference between data from 2003 and 2015</p>
+           <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-info active" onclick="switchData(true);">
+                    <input type="radio" name="options" id="data2003" autocomplete="off" checked> Data 2003
+                </label>
+                <label class="btn btn-info" onclick="switchData(false);">
+                    <input type="radio" name="options" id="data2015" autocomplete="off"> Data 2015
+                </label>
+            </div>
             <div id="visualization1" class="scatter">
             </div>
         </div>
