@@ -260,10 +260,13 @@
            .enter()
            .append("path")
            .attr("d", path)
-           .style("fill", "gray");
+           .attr("fill", function(d,i){return color(i);});
     }
 
-
+    function switchK(k) {
+        
+        console.log(+k); 
+    }
 			
 		
         
@@ -293,6 +296,20 @@
                     <h1>Assignment 2B:</h1>
                     <h3>Assignment title</h3>
                     <p>More detailed assignment explanation</p>
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-info active" onclick="switchK(2)" style="outline: 0">
+                            <input type="radio" name="options" autocomplete="off">K = 2
+                        </label>
+                        <label class="btn btn-info" onclick="switchK(4)" style="outline: 0">
+                            <input type="radio" name="options" autocomplete="off">K = 4
+                        </label>
+                        <label class="btn btn-info" onclick="switchK(6)" style="outline: 0">
+                            <input type="radio" name="options" autocomplete="off">K = 6
+                        </label>
+                        <label class="btn btn-info" onclick="switchK(8)" style="outline: 0">
+                            <input type="radio" name="options" autocomplete="off">K = 8
+                        </label>
+                    </div>
                     <div id="visualization2" class="geoplot"></div>
                 </div>
             </div>
