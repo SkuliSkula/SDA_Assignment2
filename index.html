@@ -28,13 +28,14 @@
         <div class="row">
             <div class="col-sm-12">
                 <h1>Assignment 2</h1>
-                <p>Visualization on this page are based on data from the San Francisco Police Department. Available [here](https://data.sfgov.org/Public-Safety/SFPD-Incidents-from-1-January-2003/tmnf-yvry).</p>
+                <p>Visualization on this page are based on data from the San Francisco Police Department. Available <a href="https://data.sfgov.org/Public-Safety/SFPD-Incidents-from-1-January-2003/tmnf-yvry" target="_blank">here</a></p>
                 <h2>Assignment 2A: One scatter plot and two datasets</h2>
-                <p>The scatter plot shows number of crimes related to prostitution and vehicle theft for the years 2003 and 2015 in San Francisco. Each point represents one of the ten districts in San Francisco.
-                [Data for 2003](Link to file)
-                [Data for 2015](Link to file)
-                [How the data was gathered](Link to file)
-                </p>
+                <p>The scatter plot shows number of crimes related to prostitution and vehicle theft for the years 2003 and 2015 in San Francisco. Each point represents one of the ten districts in San Francisco.</p>
+                    <p><a href="https://github.com/SkuliSkula/SocialDataAnalysis/blob/master/Assignment2/data/distr_prost_vt_count_2003.csv" target="_blank">Data for 2003.</a></p> 
+                    <p><a href="https://github.com/SkuliSkula/SocialDataAnalysis/blob/master/Assignment2/data/distr_prost_vt_count_2015.csv" target="_blank">Data for 2015.</a></p> 
+                    <p><a href="https://github.com/adalstef/social_data_2017/blob/master/Assignment02/assignment2A_data.ipynb" target="_blank">How the data was gathered.</a></p>
+                    
+                
 
                <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-info active" onclick="switchData(true);" style="outline: 0">
@@ -52,11 +53,23 @@
             <div class="row">
                 <div class="col-sm-12">
                     <h2>Assignment 2B: Visualizing geodata</h2>
-                    <p>By using [k-means clustering analysis](https://en.wikipedia.org/wiki/K-means_clustering) this map of San Francisco shows how coordinates for prostitution crimes changes color based on the cluster they belong to as the k-means value changes. The white circles represent each cluster.
-                    [Data for coordinates and the clusters they belong to](Link to file)
-                    [Data for coordinates of cluster centers](Link to file)
-                    [How the data was gathered](Link to file)
+                    <p>By using <a href="https://en.wikipedia.org/wiki/K-means_clustering" target="_blank">[k-means clustering analysis]</a> this map of San Francisco shows how coordinates for prostitution crimes changes color based on the cluster they belong to as the k-means value changes. The white circles represent each cluster.
                     </p>
+                    <p>
+                        <a href="https://github.com/SkuliSkula/SocialDataAnalysis/blob/master/Assignment2/data/k_means_lat_lon.csv" target="_blank">Data for coordinates and the clusters they belong to</a>
+                    </p>
+                    <p>
+                        <a href="https://github.com/SkuliSkula/SocialDataAnalysis/blob/master/Assignment2/data/k_means_cluster_centers.json" target="_blank">Data for coordinates of cluster centers</a>
+                    </p>
+                    <p>
+                        <a href="https://github.com/adalstef/social_data_2017/blob/master/Assignment02/assignment2B_data.ipynb" target="_blank">How the data was gathered</a>
+                    </p>
+                    <p>
+                        <a href="https://github.com/adalstef/social_data_2017/blob/master/Assignment02/kmeans_exercise.ipynb" target="_blank">K-means exercise</a>
+                    </p>
+                    
+
+                    
                     <div class="btn-group-justified" style="width: 960px" data-toggle="buttons">
                         <label class="btn btn-info active" onclick="showKData('k2')" style="outline: 0">
                             <input type="radio" name="options" autocomplete="off">K = 2
