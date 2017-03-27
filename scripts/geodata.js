@@ -97,19 +97,23 @@ function initGeoVisualization(data) {
         .enter()
         .append("path")
         .attr("class", "geodistrict")
+        .attr("id", "geodistrict")
         .attr("d", path)
         // Add district labels
     svgGEO.selectAll("text")
         .data(data.features)
         .enter()
         .append("svg:text")
-        .attr("class", "geodistricttext").text(function (d) {
+        .attr("class", "geodistricttext")
+        .attr("id", "geodistricttext")
+        .text(function (d) {
         return d.properties.DISTRICT;
     }).attr("x", function (d) {
         return path.centroid(d)[0];
     }).attr("y", function (d) {
         return path.centroid(d)[1];
     });
+    
 }
 // Switch data between different values of k (k=2,3,4,5,6)
 function showKData(k) {

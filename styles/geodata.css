@@ -11,7 +11,7 @@
     fill: steelblue;
 }
 
-.geodistrict:hover {
+#geodistrict:hover {
     fill: black;
 }
 
@@ -22,8 +22,8 @@
     opacity: 0.5;
 }
 
-.geodistricttext:hover .geodistrict{
-    fill: black;
+#geodistricttext:hover > #geodistrict {
+    fill: red;
 }
 
 .geokmeans {
