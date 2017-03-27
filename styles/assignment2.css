@@ -61,17 +61,10 @@ body {
     
 }
 
-.geodistricttext:hover {
-    font-size: 24px;
-}
 .geokmeans {
     fill: none;
     stroke: black;
     stroke-width: 2;
-}
-
-.geokmeans:hover {
-    opacity: 0;
 }
 
 .geodistrict:hover {
