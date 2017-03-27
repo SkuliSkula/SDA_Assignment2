@@ -41,6 +41,28 @@ body {
   display: none;
 }
 
+/* Styles for GEO*/
+
+.kCircle {
+    opacity: 0.5;
+}
+
+.geodistrict {
+    
+}
+
+.geokmeans {
+    opacity: 0.8
+}
+
+.geokmeans:hover {
+    fill: black;
+}
+
+.geodistrict:hover {
+    fill: black;
+}
+/* Styles for d3 tip*/
 .d3-tip {
   line-height: 1;
   font-weight: bold;
