@@ -48,11 +48,13 @@ body {
 }
 
 .geodistrict {
-    
+    stroke-width: 0.7;
+    stroke: black;
+    fill: steelblue;
 }
 
 .geodistrict:hover {
-    
+    fill: black;
 }
 
 .geodistricttext {
@@ -60,7 +62,7 @@ body {
 }
 
 .geodistricttext:hover {
-    font-size: 16px;
+    font-size: 24px;
 }
 .geokmeans {
     fill: none;
