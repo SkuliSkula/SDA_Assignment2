@@ -129,7 +129,8 @@
             .attr('class', 'd3-tip')
             .offset([-10, 0])
             .html(function(d) {
-                return "<strong>"+ d.district + ": " +"</strong> <span style='color:red'>" + "(" + d.prostitution +","+ d.vehicle_theft + ")" + "</span>";
+                return "<strong>"+ "Prostitution" + ": " +"</strong> <span style='color:red'>" + d.prostitution +
+                        "</span>" + "<strong>" + ", Vehicle Theft: " + "<span style='color:red'>" + d.vehicle_theft + "</span>";
             });
         
         
@@ -175,9 +176,7 @@
                 return -10 + yScale(+d.vehicle_theft);
             })
             .attr("fill", function(d,i) { return color(i);
-            })
-            .on("mouseover", tip.show)
-            .on("mouseout", tip.hide);
+            });
 
         
         var xAxis = d3.svg.axis()

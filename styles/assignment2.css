@@ -17,18 +17,8 @@ body {
     stroke: black;
 }
 
-.circle:hover{
-    fill: black;
-}
-
 .district {
-    
-}
-
-.district:hover {
-    fill: black;
-    font-weight: bold;
-    font-size: 18px;
+    z-index: -100;
 }
 
 .labelaxis {
