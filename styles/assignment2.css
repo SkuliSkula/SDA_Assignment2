@@ -52,7 +52,7 @@ body {
 }
 
 .geokmeans {
-    opacity: 0.8;
+    fill: none;
     stroke: black;
     stroke-width: 2;
 }
