@@ -346,6 +346,7 @@
            .data(data.features)
            .enter()
            .append("svg:text")
+           .attr("class", "geodistricttext")
            .text(function(d){
                 return d.properties.DISTRICT;
            })

@@ -44,13 +44,24 @@ body {
 /* Styles for GEO*/
 
 .kCircle {
-    opacity: 0.5;
+    opacity: 0.75;
 }
 
 .geodistrict {
     
 }
 
+.geodistrict:hover {
+    
+}
+
+.geodistricttext {
+    
+}
+
+.geodistricttext:hover {
+    font-size: 16px;
+}
 .geokmeans {
     fill: none;
     stroke: black;
