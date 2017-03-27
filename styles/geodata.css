@@ -11,10 +11,6 @@
     fill: steelblue;
 }
 
-#geodistrict:hover {
-    fill: black;
-}
-
 .geodistricttext {
     text-anchor: middle;
     font-size: 8pt;
@@ -22,16 +18,8 @@
     opacity: 0.5;
 }
 
-#geodistricttext:hover > #geodistrict {
-    fill: red;
-}
-
 .geokmeans {
     fill: none;
     stroke: white;
     stroke-width: 2;
-}
-
-.geodistrict:hover {
-    fill: black;
 }
