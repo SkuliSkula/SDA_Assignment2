@@ -41,15 +41,16 @@ body {
   display: none;
 }
 
-/* Styles for GEO*/
+/******************************************* Styles for GEO*********************************************/
 
 .kCircle {
     opacity: 0.75;
+    stroke: none;
 }
 
 .geodistrict {
     stroke-width: 0.7;
-    stroke: black;
+    stroke: white;
     fill: steelblue;
 }
 
@@ -58,12 +59,15 @@ body {
 }
 
 .geodistricttext {
-    
+    text-anchor: middle;
+    font-size: 8pt;
+    fill: black;
+    opacity: 0.5;
 }
 
 .geokmeans {
     fill: none;
-    stroke: black;
+    stroke: white;
     stroke-width: 2;
 }
 

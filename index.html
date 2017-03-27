@@ -328,7 +328,9 @@
         svgGEO = d3.select("#visualization2")
                 .append("svg")
                 .attr("width", w)
-                .attr("height", h);
+                .attr("height", h)
+                .style("background-color", "lightgray")
+                .style("stroke", "black");
         
         //Bind data and create one path per GeoJSON feature
         svgGEO.selectAll("path")
@@ -352,10 +354,7 @@
            })
            .attr("y", function(d){
                 return path.centroid(d)[1];
-           })
-           .attr("text-anchor","middle")
-           .attr("font-size","8pt")
-           .style("fill", "#ccc");
+           });
     }
         
     function showKData(k) {
@@ -464,7 +463,7 @@
                     <h1>Assignment 2B:</h1>
                     <h3>Assignment title</h3>
                     <p>More detailed assignment explanation</p>
-                    <div class="btn-group" data-toggle="buttons">
+                    <div class="btn-group-justified" style="width: 960px" data-toggle="buttons">
                         <label class="btn btn-info active" onclick="showKData('k2')" style="outline: 0">
                             <input type="radio" name="options" autocomplete="off">K = 2
                         </label>
