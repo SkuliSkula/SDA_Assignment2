@@ -9,37 +9,16 @@ body {
   shape-rendering: crispEdges;
 }
 
-.bar {
-  fill: olive;
-}
-
-.bars {
-    fill: lightblue;
-}
-
-.bars:hover {
-    fill: olive;
-}
-
 .scatter {
   fill: black;
 }
 
 .circle {
-    fill: gray;
     stroke: black;
 }
 
-.circle:hover {
-    fill: black;
-}
-
 .district {
-    fill: olive;
-}
-
-.district:hover {
-    fill: black;
+    z-index: -100;
 }
 
 .labelaxis {
@@ -52,6 +31,7 @@ body {
   display: none;
 }
 
+/* Styles for d3 tip*/
 .d3-tip {
   line-height: 1;
   font-weight: bold;
